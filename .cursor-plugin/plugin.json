@@ -1,0 +1,29 @@
+{
+  "name": "qstack",
+  "displayName": "qstack",
+  "version": "0.1.0",
+  "description": "React-focused Cursor skills. Dual-review as lauren and eps1lon, ship through /react on top of pstack.",
+  "author": {
+    "name": "QuarkOS"
+  },
+  "homepage": "https://github.com/QuarkOS/Qstack",
+  "repository": "https://github.com/QuarkOS/Qstack",
+  "license": "MIT",
+  "keywords": [
+    "qstack",
+    "react",
+    "eps1lon-mode",
+    "lauren-mode",
+    "dual-review",
+    "compiler"
+  ],
+  "category": "developer-tools",
+  "tags": [
+    "react",
+    "workflow",
+    "review",
+    "compiler"
+  ],
+  "skills": "./skills/",
+  "agents": "./agents/"
+}
