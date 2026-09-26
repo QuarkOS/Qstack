@@ -1,8 +1,8 @@
 # qstack
 
-React-focused Cursor skills for QuarkOS. Pair with [pstack](https://github.com/cursor/plugins/tree/main/pstack) for playbooks, then use qstack for React core conventions and a dual-review publish pipeline.
+Cursor skills for QuarkOS coding agents. Skills, a verification loop, and review modes. It sits beside [pstack](https://github.com/cursor/plugins/tree/main/pstack).
 
-**qstack is not a fork of pstack.** It sits beside it. `/react` calls pstack's `/poteto-mode`, `/swarm`, and `/create-verification-skill`, then reviews with lauren and eps1lon habits mined from public `react/react` work.
+**qstack is not a fork of pstack.** pstack owns the playbooks (`/poteto-mode`, `/swarm`, `/create-verification-skill`). qstack ships skills that call that loop, plus OS verification and React review habits.
 
 ## install
 
@@ -18,7 +18,11 @@ Point Cursor at this repository as a local or GitHub plugin source, or clone and
 
 1. Install pstack and run `/setup-pstack` if you have not already.
 2. Install qstack.
-3. For React work, start with `/react`.
+3. Invoke the skill that matches the job. Each skill is `skills/<name>/SKILL.md`.
+
+```
+/verify-on-os prove this on Ubuntu 24.04.
+```
 
 ```
 /react fix Fragment blur inside ShadowRoot. repro on main first, then dual-review before ready.
@@ -34,26 +38,22 @@ Point Cursor at this repository as a local or GitHub plugin source, or clone and
 
 ## skills
 
-Layout matches pstack. Each skill lives under `skills/<name>/SKILL.md`.
+The plugin manifest points `skills` at `./skills/`. Layout matches pstack.
 
 | skill | use it when |
 |---|---|
-| [`/react`](./skills/react/SKILL.md) | end-to-end React change. poteto-mode build, verify, swarm, open PR, lauren+eps1lon dual review, fix, publish ready. |
+| [`/verify-on-os`](./skills/verify-on-os/SKILL.md) | prove a change on a fresh Ubuntu 24.04, Fedora 44, or Windows 11 VM. SSH through Cloudflare Access to verify.emilioschwaiger.com. |
+| [`/react`](./skills/react/SKILL.md) | end-to-end React change: poteto-mode build, verify, swarm, open PR, lauren and eps1lon dual review, fix, publish ready. |
 | [`/lauren-mode`](./skills/lauren-mode/SKILL.md) | match Lauren (GitHub poteto) React Compiler and rust-compiler habits. |
 | [`/eps1lon-mode`](./skills/eps1lon-mode/SKILL.md) | match Sebastian Silbermann (eps1lon) Fiber, DOM, Flight, test, and CI habits. |
 
-### `/react` pipeline
+## verification
 
-1. Enter poteto-mode
-2. Ensure verification skill
-3. Build the change
-4. Swarm verify
-5. Open the PR
-6. Dual review (`lauren-mode` + `eps1lon-mode`)
-7. Fix review issues
-8. Publish (ready PR; land only on explicit ask)
+A verification skill has to exist before the loop is trusted. After a coding job, run a swarm of read-only verify agents against the project's `verify-<app>` skill (pstack `/swarm` and `/create-verification-skill`).
 
-### agents
+`/verify-on-os` is the homelab check: one SSH login, one fresh VM, destroyed on disconnect. `/react` runs the same verify-then-swarm loop, then dual-reviews.
+
+## agents
 
 | agent | role |
 |---|---|
@@ -75,6 +75,7 @@ Qstack/
   agents/
     react-agent.md
   skills/
+    verify-on-os/SKILL.md
     react/SKILL.md
     lauren-mode/SKILL.md
     eps1lon-mode/SKILL.md
