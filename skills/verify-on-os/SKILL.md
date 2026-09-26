@@ -29,7 +29,10 @@ If any is missing, stop and report which env name is absent. Never print the val
 
 ## Steps
 
-1. Install cloudflared from the official GitHub release (linux-amd64) to `/tmp/cloudflared` and `chmod +x` it.
+1. Install cloudflared:
+   ```bash
+   curl -fsSL -o /tmp/cloudflared https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 && chmod +x /tmp/cloudflared
+   ```
 2. Write the key. The secret may arrive as one line with spaces where the newlines belong, so restore the newlines:
    ```bash
    mkdir -p ~/.ssh
@@ -49,7 +52,8 @@ If any is missing, stop and report which env name is absent. Never print the val
      -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=150 \
      -o ProxyCommand="/tmp/cloudflared access ssh --hostname %h --loglevel error --service-token-id $CF_ACCESS_CLIENT_ID --service-token-secret $CF_ACCESS_CLIENT_SECRET" \
      "$os@verify.emilioschwaiger.com" "$@"; }
-   vssh ubuntu 'head -1 /etc/os-release'
+   vssh ubuntu 'grep ^PRETTY_NAME= /etc/os-release'
+   vssh fedora 'grep ^PRETTY_NAME= /etc/os-release'
    vssh windows ver
    ```
    Windows boots in about 60s. On Windows, pass plain cmd commands (`ver`, `where node`); `cmd /c ...` gets mis-quoted.
@@ -57,4 +61,4 @@ If any is missing, stop and report which env name is absent. Never print the val
 
 ## Report
 
-Show the exact command, the exit code, the output lines that prove it, and the `[verify-gw] clone NNNN` line. A connection failure is BLOCKED, not PASS: `websocket: bad handshake` means the service token is wrong or missing, and `Permission denied (publickey)` means the key is wrong.
+Show the exact command, the exit code, the output lines that prove it, and the `[verify-gw] clone NNNN` line. The `[verify-gw] clone` line goes to stderr, so capture it with `2>&1`. Ignore the known-hosts warning and the remote `setlocale` warning when the clone line is present. `ver` prints a blank line first. A connection failure is BLOCKED, not PASS: `websocket: bad handshake` means the service token is wrong or missing, and `Permission denied (publickey)` means the key is wrong.
