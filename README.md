@@ -42,7 +42,7 @@ The plugin manifest points `skills` at `./skills/`. Layout matches pstack.
 
 | skill | use it when |
 |---|---|
-| [`/verify-on-os`](./skills/verify-on-os/SKILL.md) | prove a change on a fresh Ubuntu 24.04, Fedora 44, or Windows 11 VM. SSH through Cloudflare Access to verify.emilioschwaiger.com. |
+| [`/verify-on-os`](./skills/verify-on-os/SKILL.md) | prove a change on a fresh Ubuntu 24.04, Fedora 44, Windows 11, or Android 12 VM. SSH through Cloudflare Access to verify.emilioschwaiger.com. |
 | [`/react`](./skills/react/SKILL.md) | end-to-end React change: poteto-mode build, verify, swarm, open PR, lauren and eps1lon dual review, fix, publish ready. |
 | [`/lauren-mode`](./skills/lauren-mode/SKILL.md) | match Lauren (GitHub poteto) React Compiler and rust-compiler habits. |
 | [`/eps1lon-mode`](./skills/eps1lon-mode/SKILL.md) | match Sebastian Silbermann (eps1lon) Fiber, DOM, Flight, test, and CI habits. |
